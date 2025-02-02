@@ -15,6 +15,13 @@ const ProfilePreview = () => {
     dispatch(fetchUser());
   }, [dispatch]);
 
+  const onLogout = () => {
+    if (localStorage.getItem("access_token")) {
+      localStorage.removeItem("access_token");
+    }
+    window.location.href = "/preview";
+  };
+
   return (
     <>
       {userLoadingStatus === "loading" ? (
@@ -32,7 +39,7 @@ const ProfilePreview = () => {
               <img src={external_link_logo} className="user_menu__item_icon" alt=""/>
             </Link>
             <hr className="user_menu__divider" />
-            <button className="user_menu__item">
+            <button className="user_menu__item" onClick={onLogout}>
               Logout
               <img src={logout_icon} className="user_menu__item_icon" alt=""/>
             </button>
