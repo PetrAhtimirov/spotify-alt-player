@@ -1,6 +1,10 @@
+import Header from "./features/header/Header.tsx";
+
 const App = () => {
   return (
-    <div className="App">App</div>
+    <div className="app">
+      <Header />
+    </div>
   )
 }
 

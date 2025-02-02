@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    background-color: #121212;
+    color: #fff;
+}
+
+button {
+    color: inherit;
+    cursor: pointer;
+    font-size: inherit;
+    border: inherit;
+    background-color: transparent;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.app {
+    font-family: "Helvetica Neue", sans-serif;
+    height: 100vh;
+}
+
+.app__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    height: 4rem;
+}
+
+.user_preview__wrapper {
+    position: relative;
+    font-size: 0.875rem;
+}
+
+.user_preview {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.3rem 1em 0.3rem 0.4rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: saturate(1.8) blur(15px);
+    border-radius: 1.5rem;
+    transition: 0.3s;
+}
+
+.user_preview:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.user_preview.is_loading {
+    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12) 8%, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.12) 33%);
+    border-radius: 1.5rem;
+    background-size: 200% 100%;
+    animation: 1.5s shine linear infinite;
+    height: 2rem;
+    width: 5.2rem;
+}
+
+.use_preview__image {
+    height: 2rem;
+    border-radius: 1rem;
+}
+
+.user_menu {
+    position: absolute;
+    top: 3.2rem;
+    right: 0;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: saturate(1.8) blur(15px);
+    width: fit-content;
+    display: none;
+}
+
+.user_menu.open {
+    display: block
+}
+
+.user_menu__item {
+    width: 100%;
+    min-width: 8.5rem;
+    padding: 0.5em;
+    text-align: start;
+    border-radius: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.user_menu__item.link {
+    box-sizing: border-box;
+}
+
+.user_menu__item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.user_menu__item_icon {
+    height: 1rem;
+}
+
+.user_menu__divider {
+    height: 1px;
+    width: 100%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+
+@keyframes shine {
+    to {
+        background-position-x: -200%;
+    }
+}

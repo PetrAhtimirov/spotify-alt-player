@@ -3,8 +3,9 @@ import {createRoot} from 'react-dom/client';
 import {BrowserRouter, Route, Routes} from 'react-router';
 import PreviewPage from "./PreviewPage.tsx";
 import {Provider} from 'react-redux';
-import {store} from './store.ts';
+import store from './store';
 import App from "./App.tsx";
+import './style.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
