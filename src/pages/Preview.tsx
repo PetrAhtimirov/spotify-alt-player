@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import hash from "./hash.ts";
-import { useNavigate } from "react-router";
+import hash from "../hash.ts";
+import { useNavigate, useLocation } from "react-router";
+import ErrorMessage from "../features/errorMessage/ErrorMessage.tsx";
+
 
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
@@ -11,9 +13,17 @@ const scopes = [
   "user-read-playback-state",
 ];
 
-const PreviewPage: React.FC = () => {
+const Preview: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const errorCode = searchParams.get("error");
+    if (errorCode) setError(errorCode);
+  }, []);
 
   useEffect(() => {
     const _token = (hash as { access_token?: string }).access_token;
@@ -25,8 +35,10 @@ const PreviewPage: React.FC = () => {
     }
   }, [navigate]);
 
+
   return (
-    <div className="App">
+    <div className="preview">
+      {error !== null ? <ErrorMessage code={error} /> : null}
       <header className="App-header">
         {!token ? (
           <a
@@ -45,4 +57,4 @@ const PreviewPage: React.FC = () => {
   );
 };
 
-export default PreviewPage;
+export default Preview;

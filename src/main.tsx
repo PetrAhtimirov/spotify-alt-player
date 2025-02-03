@@ -1,10 +1,10 @@
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import {BrowserRouter, Route, Routes} from 'react-router';
-import PreviewPage from "./PreviewPage.tsx";
+import Preview from "./pages/Preview.tsx";
 import {Provider} from 'react-redux';
 import store from './store';
-import App from "./App.tsx";
+import App from "./pages/App.tsx";
 import './style.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/preview" element={<PreviewPage/>}/>
+          <Route path="/preview" element={<Preview/>}/>
           <Route path="/" element={<App/>}/>
         </Routes>
       </BrowserRouter>

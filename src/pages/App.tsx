@@ -1,4 +1,4 @@
-import Header from "./features/header/Header.tsx";
+import Header from "../features/header/Header.tsx";
 
 const App = () => {
   return (

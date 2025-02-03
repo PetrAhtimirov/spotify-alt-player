@@ -18,12 +18,15 @@ export const useHttp = () => {
       });
 
       if (!response.ok) {
+        if (response.status === 401 || response.status === 403)
+          window.location.href = `/preview?error=${response.status}`;
+
         throw new Error(`Could not fetch ${url}, status: ${response.status}`);
       }
 
       return await response.json();
     } catch (e) {
-      console.error(e);
+      console.log(e);
       throw e;
     }
   };
