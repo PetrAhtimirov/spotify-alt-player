@@ -43,7 +43,7 @@ a {
     background-color: rgba(255, 255, 255, 0.08);
     backdrop-filter: saturate(1.8) blur(15px);
     border-radius: 1.5rem;
-    transition: 0.3s;
+    transition: background-color 0.3s;
 }
 
 .user_preview:hover {

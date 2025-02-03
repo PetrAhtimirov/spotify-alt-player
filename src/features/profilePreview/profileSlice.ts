@@ -1,10 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {useHttp} from "../../hooks/http.hook.ts";
 
-const initialState = {
+export interface UserState {
+  userLoadingStatus: "loading" | "idle" | "error";
+  display_name: string;
+  images: { url: string }[];
+  id: string;
+}
+
+const initialState: UserState = {
   userLoadingStatus: "idle",
   display_name: "",
-  href: "",
   id: "",
   images: [],
 };
@@ -35,7 +41,6 @@ const userSlice = createSlice({
         state.userLoadingStatus = "idle";
         console.log(action.payload);
         state.display_name = action.payload.display_name;
-        state.href = action.payload.href;
         state.id = action.payload.id;
         state.images = action.payload.images;
       })
