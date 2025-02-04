@@ -6,12 +6,10 @@ import deviceIcon from "../../../assets/icons/device.svg";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-const useAppDispatch = () => useDispatch<AppDispatch>();
-
 const PlaybackDevice = () => {
   const {devices, playbackDeviceLoadingStatus} = useTypedSelector((state) => state.playbackDevice);
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -56,7 +54,6 @@ const PlaybackDevice = () => {
         <ul className={`playback_device__menu__list`}>
           {playbackDeviceLoadingStatus === "loading" ? (
             <>
-              <li className="playback_device__loading"></li>
               <li className="playback_device__loading"></li>
             </>
           ) : (devices.map((device) => (
