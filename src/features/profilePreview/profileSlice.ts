@@ -39,7 +39,6 @@ const userSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.userLoadingStatus = "idle";
-        console.log(action.payload);
         state.display_name = action.payload.display_name;
         state.id = action.payload.id;
         state.images = action.payload.images;

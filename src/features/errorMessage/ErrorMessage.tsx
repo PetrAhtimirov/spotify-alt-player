@@ -15,7 +15,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ code }) => {
         setMessage("Not Authorized");
         break;
       case "403":
-        setMessage("Not available in your country");
+        setMessage("Not available in your region");
         break;
       default:
         setMessage("An error occurred");
