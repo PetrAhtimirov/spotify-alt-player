@@ -33,6 +33,24 @@ export const fetchPlaybackDevice = createAsyncThunk("playback/fetchPlaybackDevic
   }
 });
 
+export const fetchPlaybackDeviceSelect = createAsyncThunk("playback/fetchPlaybackDeviceSelect", async (deviceId: string, {rejectWithValue}) => {
+  try {
+    const {request} = useHttp();
+    await request(
+      "https://api.spotify.com/v1/me/player",
+      "PUT",
+      false,
+      {device_ids: [deviceId]}
+    );
+    return deviceId;
+  } catch (error) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+    return rejectWithValue("An unknown error occurred");
+  }
+});
+
 const playbackDeviceSlice = createSlice({
   name: "playbackDevice",
   initialState,
@@ -48,6 +66,12 @@ const playbackDeviceSlice = createSlice({
       })
       .addCase(fetchPlaybackDevice.rejected, (state) => {
         state.playbackDeviceLoadingStatus = "error";
+      })
+      .addCase(fetchPlaybackDeviceSelect.fulfilled, (state, action) => {
+        state.devices = state.devices.map((device) => ({
+          ...device,
+          is_active: device.id === action.payload,
+        }));
       });
   },
 });

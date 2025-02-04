@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {fetchPlaybackDevice} from "./playbackDeviceSlice.ts";
+import {fetchPlaybackDevice, fetchPlaybackDeviceSelect} from "./playbackDeviceSlice.ts";
 import {AppDispatch, RootState} from "../../store";
 import deviceIcon from "../../../assets/icons/device.svg";
 
@@ -42,6 +42,10 @@ const PlaybackDevice = () => {
     };
   }, [isOpen]);
 
+  const onSelect = async (deviceId: string) => {
+    dispatch(fetchPlaybackDeviceSelect(deviceId));
+  };
+
   return (
     <div className="playback_device__wrapper">
       <button ref={buttonRef} className="playback_device__preview" onClick={() => setIsOpen((prev) => !prev)}>
@@ -57,7 +61,8 @@ const PlaybackDevice = () => {
             </>
           ) : (devices.map((device) => (
             <li key={device.id}>
-              <button className={`playback_device__button ${device.is_active ? "active" : ""}`}>
+              <button className={`playback_device__button ${device.is_active ? "active" : ""}`}
+                      onClick={() => onSelect(device.id)}>
                 <div className="playback_device__button__point"></div>
                 {device.name}
               </button>
