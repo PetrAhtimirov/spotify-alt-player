@@ -1,6 +1,7 @@
 import { configureStore, Middleware } from "@reduxjs/toolkit";
 import userReducer from "./features/profilePreview/profileSlice";
-import playbackReducer from "./features/playbackControllers/playbackSlice";
+import playbackReducer from "./features/playback/playbackSlice";
+import playbackDeviceReducer from "./features/playbackDevice/playbackDeviceSlice";
 
 const stringMiddleware: Middleware = () => (next) => (action) => {
   if (typeof action === "string") {
@@ -10,7 +11,7 @@ const stringMiddleware: Middleware = () => (next) => (action) => {
 };
 
 const store = configureStore({
-  reducer: { user: userReducer, playback: playbackReducer },
+  reducer: { user: userReducer, playbackDevice: playbackDeviceReducer, playback: playbackReducer },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(stringMiddleware),
   devTools: process.env.NODE_ENV !== "production",
 });

@@ -50,6 +50,10 @@ a {
     transition: background-color 0.3s;
 }
 
+.user_preview.open {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
 .user_preview:hover {
     background-color: rgba(255, 255, 255, 0.12);
 }
@@ -69,14 +73,15 @@ a {
 
 .user_menu {
     position: absolute;
-    top: 3.2rem;
+    top: 2.9rem;
     right: 0;
     padding: 0.5rem;
     border-radius: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.04);
     backdrop-filter: saturate(1.8) blur(15px);
     width: fit-content;
     display: none;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2);
 }
 
 .user_menu.open {
@@ -170,6 +175,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 1rem;
 }
 
 .playback_controllers__wrapper {
@@ -188,6 +194,8 @@ a {
 
 .playback_controllers {
     display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .playback__pause {
@@ -207,6 +215,135 @@ a {
 
 .playback__pause_icon {
     height: 1.6rem;
+}
+
+.playback__prev {
+    height: fit-content;
+    padding: 0;
+    opacity: 0.86;
+}
+
+.playback__prev_icon {
+    height: 1.4rem;
+    transform: scaleX(-1);
+}
+
+.playback__next {
+    height: fit-content;
+    padding: 0;
+    opacity: 0.86;
+}
+
+.playback__next_icon {
+    height: 1.4rem;
+}
+
+.playback_settings {
+    display: flex;
+    align-items: center;
+}
+
+.playback_settings__wrapper {
+    position: relative;
+}
+
+.playback_device__preview {
+    padding: 0;
+    height: fit-content;
+    display: flex;
+}
+
+.playback_device__icon {
+    height: 1.6rem;
+    opacity: 0.86;
+}
+
+.playback_device__menu {
+    position: absolute;
+    bottom: 4.2rem;
+    right: 1rem;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.04);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    backdrop-filter: saturate(1.8) blur(15px);
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2);
+    font-size: 0.875rem;
+}
+
+.playback_device__menu.open {
+    display: flex;
+    flex-direction: column;
+}
+
+.playback_device__menu__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.playback_device__button {
+    padding: 0.5rem 0.7rem 0.5rem 0.5rem;
+    border-radius: 0.4rem;
+    transition: background-color 0.3s;
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    width: 100%;
+}
+
+.playback_device__button__point {
+    width: 10px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playback_device__button__point::before {
+    content: '';
+    display: block;
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 5px;
+    width: 5px;
+    border-radius: 5px;
+}
+
+.playback_device__button.active > .playback_device__button__point::before {
+    background-color: #1DB954;
+    animation: playing 1s infinite alternate ease-out;
+}
+
+.playback_device__button:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.playback_device__loading {
+    width: 13rem;
+    height: 2rem;
+    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12) 8%, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.12) 33%);
+    background-size: 200% 100%;
+    border-radius: 0.4rem;
+    animation: 1.5s shine linear infinite;
+}
+
+.playback_device__header {
+    padding: 0.5rem;
+}
+
+@keyframes playing {
+    from {
+        height: 5px;
+        width: 5px;
+    }
+    to {
+        height: 10px;
+        width: 10px;
+    }
 }
 
 @keyframes shine {

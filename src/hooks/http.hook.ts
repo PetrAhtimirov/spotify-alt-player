@@ -2,6 +2,7 @@ export const useHttp = () => {
   const request = async (
     url: string,
     method: string = 'GET',
+    isResponsible: boolean = true,
     body: any = null,
     headers: Record<string, string> = {'Content-Type': 'application/json'}
   ) => {
@@ -10,7 +11,6 @@ export const useHttp = () => {
       if (token) {
         headers = { ...headers, Authorization: `Bearer ${token}` };
       }
-
       const response = await fetch(url, {
         method,
         body: body ? JSON.stringify(body) : null,
@@ -19,14 +19,15 @@ export const useHttp = () => {
 
       if (!response.ok) {
         if (response.status === 401 || response.status === 403)
-          window.location.href = `/preview?error=${response.status}`;
+         window.location.href = `/preview?error=${response.status}`;
 
         throw new Error(`Could not fetch ${url}, status: ${response.status}`);
       }
-
-      return await response.json();
+      // console.log(response);
+      if (isResponsible && response.status !== 204) return await response.json();
+      else return null;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       throw e;
     }
   };
