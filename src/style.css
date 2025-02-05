@@ -66,9 +66,24 @@ a {
     animation: 1.5s shine linear infinite;
 }
 
-.use_preview__image {
+.user_preview__image {
     height: 2rem;
+    width: 2rem;
     border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12) 8%, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.12) 33%);
+    background-size: 200% 100%;
+    animation: 1.5s shine linear infinite;
+}
+
+.user_preview__image__loading {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12) 8%, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.12) 33%);
+    background-size: 200% 100%;
+    animation: 1.5s shine linear infinite;
 }
 
 .user_menu {
@@ -190,6 +205,7 @@ a {
     align-items: center;
     gap: 2rem;
     padding: 0.5rem;
+    height: calc(100% - 1rem);
 }
 
 .app__player__empty {
@@ -227,37 +243,36 @@ a {
     margin: 0;
     display: flex;
     align-items: center;
-    transition: transform 0.3s;
+    transition: 0.3s;
     opacity: 0.86;
 }
 
 .playback__pause:hover {
     transform: scale(1.06);
+    opacity: 1;
 }
 
 .playback__pause_icon {
     height: 1.6rem;
 }
 
-.playback__prev {
+.playback__prev, .playback__next {
     height: fit-content;
     padding: 0;
-    opacity: 0.86;
+    opacity: 0.72;
+    transition: opacity 0.3s;
+}
+
+.playback__prev:hover, .playback__next:hover {
+    opacity: 1;
+}
+
+.playback__prev_icon, .playback__next_icon {
+    height: 1.4rem;
 }
 
 .playback__prev_icon {
-    height: 1.4rem;
     transform: scaleX(-1);
-}
-
-.playback__next {
-    height: fit-content;
-    padding: 0;
-    opacity: 0.86;
-}
-
-.playback__next_icon {
-    height: 1.4rem;
 }
 
 .playback_settings {
@@ -365,9 +380,44 @@ a {
     gap: 0.8rem;
 }
 
+.playback_current_track.loading .first {
+    height: 4rem;
+    width: 4rem;
+    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12) 8%, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.12) 33%);
+    background-size: 200% 100%;
+    border-radius: 0.3rem;
+    animation: 1.5s shine linear infinite;
+}
+
+.playback_current_track.loading .second {
+    height: 1rem;
+    width: 8rem;
+    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12) 8%, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.12) 33%);
+    background-size: 200% 100%;
+    border-radius: 0.3rem;
+    animation: 1.5s shine linear infinite;
+}
+
+.playback_current_track.loading .third {
+    height: 0.875rem;
+    width: 8rem;
+    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12) 8%, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.12) 33%);
+    background-size: 200% 100%;
+    border-radius: 0.3rem;
+    animation: 1.5s shine linear infinite;
+}
+
 .current_track__image {
     height: 4rem;
+    width: 4rem;
+    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12) 8%, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.12) 33%);
+    background-size: 200% 100%;
     border-radius: 0.3rem;
+    animation: 1.5s shine linear infinite;
 }
 
 .current_track__info {
@@ -376,10 +426,31 @@ a {
     gap: 0.3rem
 }
 
+.playback_current_track.loading .current_track__info {
+    gap: 0.5rem;
+}
+
+.artists_list {
+    display: flex;
+}
+
 .artist_item {
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.8);
+    display: flex;
 }
+
+.artist_item::after {
+    content: ',';
+    display: block;
+    margin-right: 0.2rem;
+}
+
+.artist_item:last-of-type::after {
+    display: none;
+}
+
+
 
 @keyframes playing {
     from {

@@ -1,7 +1,13 @@
 import nextIcon from "../../../assets/icons/next.svg";
 import pauseIcon from "../../../assets/icons/pause.svg";
 import playIcon from "../../../assets/icons/play.svg";
-import {fetchPlayback, fetchPlaybackPause, fetchPlaybackPlay} from "../playback/playbackSlice.ts";
+import {
+  fetchPlayback,
+  fetchPlaybackNext,
+  fetchPlaybackPause,
+  fetchPlaybackPlay,
+  fetchPlaybackPrev
+} from "../playback/playbackSlice.ts";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store.ts";
 import {useEffect} from "react";
@@ -29,9 +35,19 @@ const PlaybackControllers = () => {
     else dispatch(fetchPlaybackPlay())
   }
 
+  const onNext = async () => {
+    await dispatch(fetchPlaybackNext());
+    dispatch(fetchPlayback());
+  }
+
+  const onPrev = async () => {
+    await dispatch(fetchPlaybackPrev());
+    dispatch(fetchPlayback());
+  }
+
   return (
     <div className="playback_controllers">
-      <button className="playback__prev">
+      <button className="playback__prev" onClick={onPrev}>
         <img src={nextIcon} className="playback__prev_icon" alt=""/>
       </button>
       <button className="playback__pause" onClick={onPlayPause}>
@@ -41,7 +57,7 @@ const PlaybackControllers = () => {
           <img src={playIcon} className="playback__pause_icon" alt="Play"/>
         )}
       </button>
-      <button className="playback__next">
+      <button className="playback__next" onClick={onNext}>
         <img src={nextIcon} className="playback__next_icon" alt=""/>
       </button>
     </div>

@@ -140,6 +140,44 @@ export const fetchPlaybackPause = createAsyncThunk(
   }
 );
 
+export const fetchPlaybackNext = createAsyncThunk(
+  "playback/fetchPlaybackNext",
+  async (_, {getState, rejectWithValue}) => {
+    try {
+      const {request} = useHttp();
+      const state = getState() as RootState;
+      const deviceId = state.playback.device.id;
+
+      await request(`https://api.spotify.com/v1/me/player/next?device_id=${deviceId}`, "POST", false);
+      return null;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
+    }
+  }
+);
+
+export const fetchPlaybackPrev = createAsyncThunk(
+  "playback/fetchPlaybackPrev",
+  async (_, {getState, rejectWithValue}) => {
+    try {
+      const {request} = useHttp();
+      const state = getState() as RootState;
+      const deviceId = state.playback.device.id;
+
+      await request(`https://api.spotify.com/v1/me/player/previous?device_id=${deviceId}`, "POST", false);
+      return null;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
+    }
+  }
+);
+
 const playbackSlice = createSlice({
   name: "playback",
   initialState,

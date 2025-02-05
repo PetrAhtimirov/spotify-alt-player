@@ -52,7 +52,9 @@ const ProfilePreview = () => {
       ) : (
         <div className="user_preview__wrapper">
           <button ref={buttonRef} className={`user_preview ${isOpen ? "open" : ""}`} onClick={() => setIsOpen((prev) => !prev)}>
-            {images.length !== 0 ? <img src={images[0].url} alt="profile image" className="use_preview__image" /> : null}
+            {images.length !== 0 ? <img src={images[1].url} alt="" className="user_preview__image" /> : (
+              <div className="user_preview__image__loading"></div>
+            )}
             <span>{display_name}</span>
           </button>
             <div className={`user_menu ${isOpen ? "open" : ""}`} ref={menuRef}>
