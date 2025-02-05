@@ -3,6 +3,7 @@ import {AppDispatch, RootState} from "../../store.ts";
 import {useEffect, useState} from "react";
 import PlaybackDevice from "../playbackDevice/PlaybackDevice.tsx";
 import PlaybackControllers from "../playbackControllers/PlaybackControllers.tsx";
+import CurrentTrack from "../currentTrack/CurrentTrack.tsx";
 import {fetchPlaybackDevice} from "../playbackDevice/playbackDeviceSlice.ts";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -28,7 +29,7 @@ const Playback = () => {
           </div>
         ) : (
           <div className="app__player__inner">
-            <div></div>
+            <CurrentTrack/>
             <div className="playback_controllers__wrapper">
               <PlaybackControllers/>
             </div>

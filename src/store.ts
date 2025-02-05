@@ -11,7 +11,11 @@ const stringMiddleware: Middleware = () => (next) => (action) => {
 };
 
 const store = configureStore({
-  reducer: { user: userReducer, playbackDevice: playbackDeviceReducer, playback: playbackReducer },
+  reducer: {
+    user: userReducer,
+    playbackDevice: playbackDeviceReducer,
+    playback: playbackReducer,
+  },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(stringMiddleware),
   devTools: process.env.NODE_ENV !== "production",
 });

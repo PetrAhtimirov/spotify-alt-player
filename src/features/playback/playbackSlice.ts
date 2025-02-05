@@ -15,6 +15,31 @@ export interface PlaybackState {
     volume_percent: number;
     supports_volume: boolean;
   };
+  item: {
+    id: string;
+    name: string;
+    popularity: number;
+    preview_url: string;
+    track_number: number;
+    type: string;
+    uri: string;
+    is_local: boolean;
+    album: {
+      images: {
+        url: string;
+        height: number;
+        width: number;
+      }[];
+    },
+    artists: {
+      external_urls: {spotify: string},
+      href: string,
+      id: string,
+      name: string,
+      type: string,
+      uri: string
+    }[]
+  }
   is_playing: boolean;
 }
 
@@ -29,6 +54,20 @@ const initialState: PlaybackState = {
     type: "",
     volume_percent: 0,
     supports_volume: false,
+  },
+  item: {
+    id: "",
+    name: "",
+    popularity: 0,
+    preview_url: "",
+    track_number: 0,
+    type: "",
+    uri: "",
+    is_local: false,
+    album: {
+      images: [],
+    },
+    artists: []
   },
   is_playing: false,
 };
@@ -116,8 +155,12 @@ const playbackSlice = createSlice({
       })
       .addCase(fetchPlayback.fulfilled, (state, action) => {
         state.playbackLoadingStatus = "idle";
-        state.device = action.payload.device;
-        state.is_playing = action.payload.is_playing;
+        if (action.payload === null) state.device.id = "";
+        else {
+          state.device = action.payload.device;
+          state.item = action.payload.item;
+          state.is_playing = action.payload.is_playing;
+        }
       })
       .addCase(fetchPlayback.rejected, (state) => {
         state.playbackLoadingStatus = "error";
