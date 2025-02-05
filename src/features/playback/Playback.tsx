@@ -12,22 +12,6 @@ const Playback = () => {
   const [firstLoad, setFirstLoad] = useState(true);
   const dispatch = useDispatch<AppDispatch>();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (firstLoad) {
-  //       await dispatch(fetchPlayback());
-  //       setFirstLoad(false);
-  //     } else {
-  //       dispatch(fetchPlayback());
-  //     }
-  //   };
-  //
-  //   fetchData();
-  //   const intervalId = setInterval(fetchData, 30000);
-  //
-  //   return () => clearInterval(intervalId);
-  // }, [dispatch, firstLoad]);
-
   useEffect(() => {
     dispatch(fetchPlaybackDevice())
       .then(() => setFirstLoad(false));

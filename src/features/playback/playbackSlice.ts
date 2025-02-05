@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useHttp } from "../../hooks/http.hook.ts";
-import { RootState } from "../../store.ts";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {useHttp} from "../../hooks/http.hook.ts";
+import {RootState} from "../../store.ts";
+import {fetchPlaybackDeviceSelect} from "../playbackDevice/playbackDeviceSlice.ts";
 
 export interface PlaybackState {
   playbackLoadingStatus: "loading" | "idle" | "error";
@@ -32,28 +33,41 @@ const initialState: PlaybackState = {
   is_playing: false,
 };
 
-export const fetchPlayback = createAsyncThunk("playback/fetchPlayback", async (_, { rejectWithValue }) => {
-  try {
-    const { request } = useHttp();
-    const data = await request("https://api.spotify.com/v1/me/player");
-    if (data === null) {
-      await request("https://api.spotify.com/v1/me/player/play", "PUT", false);
-      const data = await request("https://api.spotify.com/v1/me");
+export const fetchPlayback = createAsyncThunk(
+  "playback/fetchPlayback",
+  async (_, {getState, dispatch, rejectWithValue}) => {
+    try {
+      const {request} = useHttp();
+      const state = getState() as RootState;
+      const activeDeviceId = state.playbackDevice.activeDeviceId;
+
+      if (!activeDeviceId) {
+        const firstDevice = state.playbackDevice.devices[0];
+        if (firstDevice) {
+          await dispatch(fetchPlaybackDeviceSelect(firstDevice.id));
+        } else {
+          return rejectWithValue("No available devices");
+        }
+      }
+
+      const data = await request("https://api.spotify.com/v1/me/player");
+
       return data;
-    } else return data;
-  } catch (error) {
-    if (error instanceof Error) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
     }
-    return rejectWithValue("An unknown error occurred");
   }
-});
+);
+
 
 export const fetchPlaybackPlay = createAsyncThunk(
   "playback/fetchPlaybackPlay",
-  async (_, { getState, rejectWithValue }) => {
+  async (_, {getState, rejectWithValue}) => {
     try {
-      const { request } = useHttp();
+      const {request} = useHttp();
       const state = getState() as RootState;
       const deviceId = state.playback.device.id;
 
@@ -70,9 +84,9 @@ export const fetchPlaybackPlay = createAsyncThunk(
 
 export const fetchPlaybackPause = createAsyncThunk(
   "playback/fetchPlaybackPause",
-  async (_, { getState, rejectWithValue }) => {
+  async (_, {getState, rejectWithValue}) => {
     try {
-      const { request } = useHttp();
+      const {request} = useHttp();
       const state = getState() as RootState;
       const deviceId = state.playback.device.id;
 
@@ -112,10 +126,10 @@ const playbackSlice = createSlice({
         state.is_playing = false;
       })
       .addCase(fetchPlaybackPlay.fulfilled, (state) => {
-      state.is_playing = true;
+        state.is_playing = true;
       });
   },
 });
 
-export const { pauseChanged } = playbackSlice.actions;
+export const {pauseChanged} = playbackSlice.actions;
 export default playbackSlice.reducer;

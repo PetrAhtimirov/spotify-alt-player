@@ -3,6 +3,7 @@ import {useHttp} from "../../hooks/http.hook.ts";
 
 export interface PlaybackDeviceState {
   playbackDeviceLoadingStatus: "loading" | "idle" | "error";
+  activeDeviceId: string;
   devices: {
     id: string;
     is_active: boolean;
@@ -17,6 +18,7 @@ export interface PlaybackDeviceState {
 
 const initialState: PlaybackDeviceState = {
   playbackDeviceLoadingStatus: "idle",
+  activeDeviceId: "",
   devices: []
 };
 
@@ -72,6 +74,7 @@ const playbackDeviceSlice = createSlice({
           ...device,
           is_active: device.id === action.payload,
         }));
+        state.activeDeviceId = action.payload;
       });
   },
 });

@@ -1,9 +1,10 @@
 import nextIcon from "../../../assets/icons/next.svg";
 import pauseIcon from "../../../assets/icons/pause.svg";
 import playIcon from "../../../assets/icons/play.svg";
-import {fetchPlaybackPause, fetchPlaybackPlay} from "../playback/playbackSlice.ts";
+import {fetchPlayback, fetchPlaybackPause, fetchPlaybackPlay} from "../playback/playbackSlice.ts";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store.ts";
+import {useEffect} from "react";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -11,6 +12,17 @@ const PlaybackControllers = () => {
   const {is_playing} = useTypedSelector((state) => state.playback);
 
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(fetchPlayback());
+    };
+
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
 
   const onPlayPause = async () => {
     if (is_playing) dispatch(fetchPlaybackPause())
