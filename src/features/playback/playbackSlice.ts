@@ -32,7 +32,7 @@ export interface PlaybackState {
       }[];
     },
     artists: {
-      external_urls: {spotify: string},
+      external_urls: { spotify: string },
       href: string,
       id: string,
       name: string,
@@ -111,7 +111,6 @@ export const fetchPlaybackPlay = createAsyncThunk(
       const deviceId = state.playback.device.id;
 
       await request(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, "PUT", false);
-      return null;
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message);
@@ -130,7 +129,6 @@ export const fetchPlaybackPause = createAsyncThunk(
       const deviceId = state.playback.device.id;
 
       await request(`https://api.spotify.com/v1/me/player/pause?device_id=${deviceId}`, "PUT", false);
-      return null;
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message);
@@ -149,7 +147,6 @@ export const fetchPlaybackNext = createAsyncThunk(
       const deviceId = state.playback.device.id;
 
       await request(`https://api.spotify.com/v1/me/player/next?device_id=${deviceId}`, "POST", false);
-      return null;
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message);
@@ -168,7 +165,25 @@ export const fetchPlaybackPrev = createAsyncThunk(
       const deviceId = state.playback.device.id;
 
       await request(`https://api.spotify.com/v1/me/player/previous?device_id=${deviceId}`, "POST", false);
-      return null;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
+    }
+  }
+);
+
+export const fetchPlaybackSetVolume = createAsyncThunk(
+  "playback/fetchPlaybackSetVolume",
+  async (volume: number, {getState, rejectWithValue}) => {
+    try {
+      const {request} = useHttp();
+      const state = getState() as RootState;
+      const deviceId = state.playback.device.id;
+
+      await request(`https://api.spotify.com/v1/me/player/volume?device_id=${deviceId}&volume_percent=${volume}`, "PUT", false);
+      return volume;
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message);
@@ -208,6 +223,9 @@ const playbackSlice = createSlice({
       })
       .addCase(fetchPlaybackPlay.fulfilled, (state) => {
         state.is_playing = true;
+      })
+      .addCase(fetchPlaybackSetVolume.fulfilled, (state, action) => {
+        state.device.volume_percent = action.payload;
       });
   },
 });

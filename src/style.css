@@ -279,6 +279,7 @@ a {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    gap: 0.8rem;
 }
 
 .playback_settings__wrapper {
@@ -293,7 +294,12 @@ a {
 
 .playback_device__icon {
     height: 1.6rem;
-    opacity: 0.86;
+    opacity: 0.72;
+    transition: opacity 0.3s;
+}
+
+.playback_device__icon:hover {
+    opacity: 1;
 }
 
 .playback_device__menu {
@@ -450,7 +456,60 @@ a {
     display: none;
 }
 
+.volume_controller {
+    display: flex;
+    gap: 0.5rem;
+}
 
+.volume_controller__mute {
+    padding: 0;
+    display: flex;
+    opacity: 0.72;
+    transition: opacity 0.3s;
+}
+
+.volume_controller__mute:hover {
+    opacity: 1;
+}
+
+.volume_controller__icon {
+    height: 1.4rem;
+}
+
+.volume_controller__range {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 7rem;
+}
+
+.volume_controller__range::-webkit-slider-runnable-track {
+    height: 0.3rem;
+    border-radius: 0.2rem;
+}
+
+.volume_controller__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -0.25rem;
+    background-color: rgba(255, 255, 255, 0.86);
+    height: 0.8rem;
+    width: 0.8rem;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    display: none;
+}
+
+.volume_controller__range:hover::-webkit-slider-thumb {
+    display: block;
+}
+
+.volume_controller__range::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.86) var(--progress), rgba(255, 255, 255, 0.3) var(--progress), rgba(255, 255, 255, 0.3) 100%);
+    border-radius: 0.2rem;
+}
 
 @keyframes playing {
     from {
