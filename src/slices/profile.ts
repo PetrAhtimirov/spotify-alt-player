@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {useHttp} from "../../hooks/http.hook.ts";
+import {useHttp} from "../hooks/http.hook.ts";
 
 export interface UserState {
   userLoadingStatus: "loading" | "idle" | "error";

@@ -1,15 +1,15 @@
-import nextIcon from "../../../assets/icons/next.svg";
-import pauseIcon from "../../../assets/icons/pause.svg";
-import playIcon from "../../../assets/icons/play.svg";
+import nextIcon from "../../assets/icons/next.svg";
+import pauseIcon from "../../assets/icons/pause.svg";
+import playIcon from "../../assets/icons/play.svg";
 import {
   fetchPlayback,
   fetchPlaybackNext,
   fetchPlaybackPause,
   fetchPlaybackPlay,
   fetchPlaybackPrev
-} from "../playback/playbackSlice.ts";
+} from "../slices/playback.ts";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../store.ts";
+import {AppDispatch, RootState} from "../store.ts";
 import {useEffect} from "react";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;

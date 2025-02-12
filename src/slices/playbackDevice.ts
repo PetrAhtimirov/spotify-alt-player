@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {useHttp} from "../../hooks/http.hook.ts";
+import {useHttp} from "../hooks/http.hook.ts";
 
 export interface PlaybackDeviceState {
   playbackDeviceLoadingStatus: "loading" | "idle" | "error";
@@ -53,7 +53,7 @@ export const fetchPlaybackDeviceSelect = createAsyncThunk("playback/fetchPlaybac
   }
 });
 
-const playbackDeviceSlice = createSlice({
+const playbackDevice = createSlice({
   name: "playbackDevice",
   initialState,
   reducers: {},
@@ -79,4 +79,4 @@ const playbackDeviceSlice = createSlice({
   },
 });
 
-export default playbackDeviceSlice.reducer;
+export default playbackDevice.reducer;

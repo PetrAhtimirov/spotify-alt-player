@@ -174,12 +174,14 @@ a {
     background-color: rgba(255, 255, 255, 0.08);
     border-radius: 5px;
     flex-grow: 3.5;
+    padding: 0.5rem;
 }
 
 .app__content__second {
     background-color: rgba(255, 255, 255, 0.08);
     border-radius: 5px;
     flex-grow: 1;
+    padding: 0.5rem;
 }
 
 .app__player {
@@ -384,6 +386,9 @@ a {
     display: flex;
     align-items: center;
     gap: 0.8rem;
+    width: calc(50vw - 10rem);
+    max-width: 35rem;
+    min-width: 10rem;
 }
 
 .playback_current_track.loading .first {
@@ -429,7 +434,30 @@ a {
 .current_track__info {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem
+    gap: 0.3rem;
+    overflow: hidden;
+}
+
+.current_track__save {
+    padding: 0;
+    display: flex;
+    margin-left: 5px;
+}
+
+.current_track__save:hover .current_track__save__image {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.current_track__save__image {
+    height: 1.6rem;
+    opacity: 0.72;
+    transition: 0.3s;
+}
+
+.current_track__save__image.saved {
+    height: 1.5rem;
+    opacity: 1;
 }
 
 .playback_current_track.loading .current_track__info {
@@ -438,6 +466,11 @@ a {
 
 .artists_list {
     display: flex;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    padding-right: 100%;
+    transform: translateX(0);
+    transition: transform 3.6s linear;
 }
 
 .artist_item {
@@ -509,6 +542,21 @@ a {
 .volume_controller__range::-webkit-slider-runnable-track {
     background: linear-gradient(to right, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.86) var(--progress), rgba(255, 255, 255, 0.3) var(--progress), rgba(255, 255, 255, 0.3) 100%);
     border-radius: 0.2rem;
+}
+
+.header__brand {
+    letter-spacing: 0.08rem;
+}
+
+.track_name {
+    text-wrap: nowrap;
+    padding-right: 100%;
+    transform: translateX(0);
+    transition: 3.6s linear;
+}
+
+.scrolling:hover {
+    transform: translateX(-105%);
 }
 
 @keyframes playing {

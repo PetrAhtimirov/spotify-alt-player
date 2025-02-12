@@ -1,5 +1,5 @@
-import Header from "../features/header/Header.tsx";
-import Playback from "../features/playback/Playback.tsx";
+import Header from "../components/Header.tsx";
+import Playback from "../components/Playback.tsx";
 
 const App = () => {
   return (

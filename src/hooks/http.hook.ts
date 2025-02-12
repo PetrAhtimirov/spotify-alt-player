@@ -18,7 +18,8 @@ export const useHttp = () => {
       });
 
       if (!response.ok) {
-        if (response.status === 401 || response.status === 403)
+        // if (response.status === 401 || response.status === 403)
+        if (response.status === 401)
          window.location.href = `/preview?error=${response.status}`;
 
         throw new Error(`Could not fetch ${url}, status: ${response.status}`);

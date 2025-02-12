@@ -1,10 +1,10 @@
-import { fetchUser } from "./profileSlice";
+import { fetchUser } from "../slices/profile.ts";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router";
-import logout_icon from "../../../assets/icons/logout.svg";
-import external_link_logo from "../../../assets/icons/external_link.svg";
-import { RootState, AppDispatch } from "../../store";
+import logout_icon from "../../assets/icons/logout.svg";
+import external_link_logo from "../../assets/icons/external_link.svg";
+import { RootState, AppDispatch } from "../store.ts";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

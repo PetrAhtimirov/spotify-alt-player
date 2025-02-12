@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store.ts";
-import { fetchPlaybackSetVolume } from "../playback/playbackSlice.ts";
-import volumeMaxIcon from "../../../assets/icons/volume_max.svg";
-import volumeMinIcon from "../../../assets/icons/volume_min.svg";
-import volumeXmarkIcon from "../../../assets/icons/volume_xmark.svg";
+import { AppDispatch, RootState } from "../store.ts";
+import { fetchPlaybackSetVolume } from "../slices/playback.ts";
+import volumeMaxIcon from "../../assets/icons/volume_max.svg";
+import volumeMinIcon from "../../assets/icons/volume_min.svg";
+import volumeXmarkIcon from "../../assets/icons/volume_xmark.svg";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

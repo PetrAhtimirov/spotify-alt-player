@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {useHttp} from "../../hooks/http.hook.ts";
-import {RootState} from "../../store.ts";
-import {fetchPlaybackDeviceSelect} from "../playbackDevice/playbackDeviceSlice.ts";
+import {useHttp} from "../hooks/http.hook.ts";
+import {RootState} from "../store.ts";
+import {fetchPlaybackDeviceSelect} from "./playbackDevice.ts";
 
 export interface PlaybackState {
   playbackLoadingStatus: "loading" | "idle" | "error";
@@ -38,7 +38,8 @@ export interface PlaybackState {
       name: string,
       type: string,
       uri: string
-    }[]
+    }[],
+    is_saved: null | boolean,
   }
   is_playing: boolean;
 }
@@ -67,7 +68,8 @@ const initialState: PlaybackState = {
     album: {
       images: [],
     },
-    artists: []
+    artists: [],
+    is_saved: null,
   },
   is_playing: false,
 };
@@ -100,7 +102,6 @@ export const fetchPlayback = createAsyncThunk(
     }
   }
 );
-
 
 export const fetchPlaybackPlay = createAsyncThunk(
   "playback/fetchPlaybackPlay",
@@ -193,7 +194,53 @@ export const fetchPlaybackSetVolume = createAsyncThunk(
   }
 );
 
-const playbackSlice = createSlice({
+export const fetchCheckSaveTrack = createAsyncThunk(
+  "playback/fetchCheckSaveTrack",
+  async (ids: string[], {rejectWithValue}) => {
+    try {
+      const {request} = useHttp();
+      const data = await request(`https://api.spotify.com/v1/me/tracks/contains?ids=${ids}`);
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
+    }
+  });
+
+export const fetchSaveTrack = createAsyncThunk(
+  "playback/fetchSaveTrack",
+  async (ids: string[], {rejectWithValue}) => {
+    try {
+      const {request} = useHttp();
+      const data = await request(`https://api.spotify.com/v1/me/tracks?ids=${ids}`, "PUT", false);
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
+    }
+  });
+
+export const fetchRemoveTrack = createAsyncThunk(
+  "playback/fetchRemoveTrack",
+  async (ids: string[], {rejectWithValue}) => {
+    try {
+      const {request} = useHttp();
+      const data = await request(`https://api.spotify.com/v1/me/tracks?ids=${ids}`, "DELETE", false);
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
+    }
+  });
+
+
+const playback = createSlice({
   name: "playback",
   initialState,
   reducers: {
@@ -211,7 +258,7 @@ const playbackSlice = createSlice({
         if (action.payload === null) state.device.id = "";
         else {
           state.device = action.payload.device;
-          state.item = action.payload.item;
+          state.item = {...action.payload.item, is_saved: state.item.is_saved};
           state.is_playing = action.payload.is_playing;
         }
       })
@@ -226,9 +273,18 @@ const playbackSlice = createSlice({
       })
       .addCase(fetchPlaybackSetVolume.fulfilled, (state, action) => {
         state.device.volume_percent = action.payload;
+      })
+      .addCase(fetchCheckSaveTrack.fulfilled, (state, action) => {
+        state.item.is_saved = action.payload[0];
+      })
+      .addCase(fetchSaveTrack.fulfilled, (state) => {
+        state.item.is_saved = true;
+      })
+      .addCase(fetchRemoveTrack.fulfilled, (state) => {
+        state.item.is_saved = false;
       });
   },
 });
 
-export const {pauseChanged} = playbackSlice.actions;
-export default playbackSlice.reducer;
+export const {pauseChanged} = playback.actions;
+export default playback.reducer;

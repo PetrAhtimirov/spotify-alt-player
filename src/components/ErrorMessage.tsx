@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import closeIcon from "../../../assets/icons/close.svg";
+import closeIcon from "../../assets/icons/close.svg";
 
 interface ErrorMessageProps {
   code: string;

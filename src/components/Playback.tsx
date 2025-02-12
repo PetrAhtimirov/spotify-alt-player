@@ -1,11 +1,11 @@
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../store.ts";
+import {AppDispatch, RootState} from "../store.ts";
 import {useEffect, useState} from "react";
-import PlaybackDevice from "../playbackDevice/PlaybackDevice.tsx";
-import PlaybackControllers from "../playbackControllers/PlaybackControllers.tsx";
-import CurrentTrack from "../currentTrack/CurrentTrack.tsx";
-import {fetchPlaybackDevice} from "../playbackDevice/playbackDeviceSlice.ts";
-import VolumeController from "../volumeController/VolumeController.tsx";
+import PlaybackDevice from "./PlaybackDevice.tsx";
+import PlaybackControllers from "./PlaybackControllers.tsx";
+import CurrentTrack from "./CurrentTrack.tsx";
+import {fetchPlaybackDevice} from "../slices/playbackDevice.ts";
+import VolumeController from "./VolumeController.tsx";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

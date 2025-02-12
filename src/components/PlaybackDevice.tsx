@@ -1,8 +1,8 @@
 import {useEffect, useRef, useState} from "react";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {fetchPlaybackDevice, fetchPlaybackDeviceSelect} from "./playbackDeviceSlice.ts";
-import {AppDispatch, RootState} from "../../store";
-import deviceIcon from "../../../assets/icons/device.svg";
+import {fetchPlaybackDevice, fetchPlaybackDeviceSelect} from "../slices/playbackDevice.ts";
+import {AppDispatch, RootState} from "../store.ts";
+import deviceIcon from "../../assets/icons/device.svg";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

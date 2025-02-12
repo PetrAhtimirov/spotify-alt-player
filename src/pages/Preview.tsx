@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import hash from "../hash.ts";
 import { useNavigate, useLocation } from "react-router";
-import ErrorMessage from "../features/errorMessage/ErrorMessage.tsx";
+import ErrorMessage from "../components/ErrorMessage.tsx";
 
 
 export const authEndpoint = "https://accounts.spotify.com/authorize";
@@ -11,7 +11,9 @@ const redirectUri = "http://localhost:3000/preview";
 const scopes = [
   "user-read-currently-playing",
   "user-read-playback-state",
-  "user-modify-playback-state"
+  "user-modify-playback-state",
+  "user-library-read",
+  "user-library-modify",
 ];
 
 const Preview: React.FC = () => {
