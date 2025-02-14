@@ -11,18 +11,42 @@ const CurrentTrack = () => {
   const {item} = useTypedSelector((state) => state.playback);
   const dispatch = useDispatch<AppDispatch>();
   const trackNameRef = useRef<HTMLSpanElement>(null);
+  const artistRef = useRef<HTMLDivElement>(null);
   const [trackScrolling, setTrackScrolling] = useState(false);
+  const [artistScrolling, setArtistScrolling] = useState(false);
 
   useEffect(() => {
     if (item.id) dispatch(fetchCheckSaveTrack([item.id]));
   }, [item.id])
 
   useEffect(() => {
-    if (trackNameRef.current) {
-      const textWidth = trackNameRef.current.scrollWidth;
-      const containerWidth = trackNameRef.current.clientWidth;
-      setTrackScrolling(textWidth > containerWidth);
-    }
+    [
+      {refElem: trackNameRef.current,
+        scrollSetFunc: setTrackScrolling,
+      },
+      {refElem: artistRef.current,
+        scrollSetFunc: setArtistScrolling,
+      }
+    ].forEach(({refElem, scrollSetFunc}) => {
+      if (refElem) {
+        const containerWidth = refElem.offsetWidth;
+        const textWidth = refElem.scrollWidth;
+
+        if (textWidth > containerWidth) {
+          scrollSetFunc(true);
+
+          const offset = textWidth - containerWidth;
+          const duration = offset / 60;
+
+          refElem.style.setProperty("--offset", `${-offset}px`);
+          refElem.style.setProperty("--duration", `${duration}s`);
+        } else {
+          scrollSetFunc(false);
+          refElem.style.removeProperty("--offset");
+          refElem.style.removeProperty("--duration");
+        }
+      }
+    })
   }, [item])
 
   const onSaveRemove = () => {
@@ -36,11 +60,13 @@ const CurrentTrack = () => {
         <img src={item.album.images[1].url} alt="" className="current_track__image"/>
         <div className="current_track__info">
           <span
-            className={`track_name ${trackScrolling ? "scrolling" : ""}`}
+            className={`track_name ${trackScrolling ? "track_name_scrolling" : ""}`}
             ref={trackNameRef}>
             {item.name}
           </span>
-          <div className="artists_list">
+          <div
+            className={`artists_list ${artistScrolling ? "artists_list_scrolling" : ""}`}
+            ref={artistRef}>
             {item.artists.map((artist) => (
               <span className="artist_item" key={artist.id}>{artist.name}</span>
             ))}

@@ -436,6 +436,7 @@ a {
     flex-direction: column;
     gap: 0.3rem;
     overflow: hidden;
+    position: relative;
 }
 
 .current_track__save {
@@ -468,9 +469,13 @@ a {
     display: flex;
     white-space: nowrap;
     flex-wrap: nowrap;
+    transition: var(--duration, 3s) linear;
     padding-right: 100%;
     transform: translateX(0);
-    transition: transform 3.6s linear;
+}
+
+.artists_list_scrolling:hover {
+    transform: translateX(var(--offset, 0px));
 }
 
 .artist_item {
@@ -549,14 +554,14 @@ a {
 }
 
 .track_name {
-    text-wrap: nowrap;
-    padding-right: 100%;
+    display: inline-block;
     transform: translateX(0);
-    transition: 3.6s linear;
+    transition: var(--duration, 3s) linear;
+    white-space: nowrap;
 }
 
-.scrolling:hover {
-    transform: translateX(-105%);
+.track_name_scrolling:hover {
+    transform: translateX(var(--offset, 0px));
 }
 
 @keyframes playing {
@@ -570,8 +575,3 @@ a {
     }
 }
 
-@keyframes shine {
-    to {
-        background-position-x: -200%;
-    }
-}

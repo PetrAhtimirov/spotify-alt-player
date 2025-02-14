@@ -260,6 +260,7 @@ const playback = createSlice({
           state.device = action.payload.device;
           state.item = {...action.payload.item, is_saved: state.item.is_saved};
           state.is_playing = action.payload.is_playing;
+          
         }
       })
       .addCase(fetchPlayback.rejected, (state) => {
