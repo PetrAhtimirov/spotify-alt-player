@@ -10,7 +10,7 @@ import './style.css';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/spotify-alt-player">
         <Routes>
           <Route path="/preview" element={<Preview/>}/>
           <Route path="/" element={<App/>}/>
