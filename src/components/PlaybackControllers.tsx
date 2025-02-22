@@ -7,7 +7,7 @@ import {
   fetchPlaybackPause,
   fetchPlaybackPlay,
   fetchPlaybackPrev
-} from "../slices/playback.ts";
+} from "../slices/playback/playback.ts";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../store.ts";
 import {useEffect} from "react";

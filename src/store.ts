@@ -1,6 +1,6 @@
 import { configureStore, Middleware } from "@reduxjs/toolkit";
 import userReducer from "./slices/profile.ts";
-import playbackReducer from "./slices/playback.ts";
+import playbackReducer from "./slices/playback/playback.ts";
 import playbackDeviceReducer from "./slices/playbackDevice.ts";
 
 const stringMiddleware: Middleware = () => (next) => (action) => {

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store.ts";
-import { fetchPlaybackSetVolume } from "../slices/playback.ts";
+import { fetchPlaybackSetVolume } from "../slices/playback/playback.ts";
 import volumeMaxIcon from "../../assets/icons/volume_max.svg";
 import volumeMinIcon from "../../assets/icons/volume_min.svg";
 import volumeXmarkIcon from "../../assets/icons/volume_xmark.svg";
@@ -9,7 +9,7 @@ import volumeXmarkIcon from "../../assets/icons/volume_xmark.svg";
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 const VolumeController = () => {
-  const { volume_percent } = useTypedSelector((state) => state.playback.device);
+  const { volume_percent, supports_volume } = useTypedSelector((state) => state.playback.device);
   const dispatch = useDispatch<AppDispatch>();
   const rangeInputRef = useRef<HTMLInputElement | null>(null);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -67,8 +67,12 @@ const VolumeController = () => {
   }
 
   return (
-    <div className="volume_controller">
-      <button className="volume_controller__mute" onClick={onMuteUnmute}>
+    <div className={`volume_controller ${supports_volume ? "" : "disabled"}`}>
+      <button
+        className="volume_controller__mute"
+        onClick={onMuteUnmute}
+        disabled={!supports_volume}
+      >
         <img
           src={localVolume === 0 ? volumeXmarkIcon : localVolume < 50 ? volumeMinIcon : volumeMaxIcon}
           alt="Volume Icon"
@@ -85,6 +89,7 @@ const VolumeController = () => {
         ref={rangeInputRef}
         value={localVolume}
         onChange={onChangeVolume}
+        disabled={!supports_volume}
       />
     </div>
   );

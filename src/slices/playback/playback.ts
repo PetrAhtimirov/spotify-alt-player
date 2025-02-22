@@ -1,50 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {useHttp} from "../hooks/http.hook.ts";
-import {RootState} from "../store.ts";
-import {fetchPlaybackDeviceSelect} from "./playbackDevice.ts";
-
-export interface PlaybackState {
-  playbackLoadingStatus: "loading" | "idle" | "error";
-  device: {
-    id: string;
-    is_active: boolean;
-    is_restricted: boolean;
-    is_private_session: boolean;
-    name: string;
-    type: string;
-    volume_percent: number;
-    supports_volume: boolean;
-  };
-  item: {
-    id: string;
-    name: string;
-    popularity: number;
-    preview_url: string;
-    track_number: number;
-    type: string;
-    uri: string;
-    is_local: boolean;
-    album: {
-      images: {
-        url: string;
-        height: number;
-        width: number;
-      }[];
-    },
-    artists: {
-      external_urls: { spotify: string },
-      href: string,
-      id: string,
-      name: string,
-      type: string,
-      uri: string
-    }[],
-    is_saved: null | boolean,
-    duration_ms: number;
-  }
-  progress_ms: number
-  is_playing: boolean;
-}
+import {useHttp} from "../../hooks/http.hook.ts";
+import {RootState} from "../../store.ts";
+import {fetchPlaybackDeviceSelect} from "../playbackDevice.ts";
+import {PlaybackState} from "./playback.types.ts";
 
 const initialState: PlaybackState = {
   playbackLoadingStatus: "idle",
@@ -76,6 +34,18 @@ const initialState: PlaybackState = {
   },
   progress_ms: 0,
   is_playing: false,
+  actions: {
+    interrupting_playback: false,
+    pausing: false,
+    resuming: false,
+    seeking: false,
+    skipping_next: false,
+    skipping_prev: false,
+    toggling_repeat_context: false,
+    toggling_shuffle: false,
+    toggling_repeat_track: false,
+    transferring_playback: false
+  }
 };
 
 export const fetchPlayback = createAsyncThunk(

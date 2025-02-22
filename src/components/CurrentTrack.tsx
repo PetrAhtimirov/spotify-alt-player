@@ -3,7 +3,7 @@ import {AppDispatch, RootState} from "../store.ts";
 import plusCircleIcon from "../../assets/icons/plus_circle.svg";
 import checkCircleSolidIcon from "../../assets/icons/check_circle_solid.svg";
 import {useEffect, useRef, useState} from "react";
-import {fetchCheckSaveTrack, fetchRemoveTrack, fetchSaveTrack} from "../slices/playback.ts";
+import {fetchCheckSaveTrack, fetchRemoveTrack, fetchSaveTrack} from "../slices/playback/playback.ts";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -21,13 +21,15 @@ const CurrentTrack = () => {
 
   useEffect(() => {
     [
-      {refElem: trackNameRef.current,
+      {name: "track",
+        refElem: trackNameRef.current,
         scrollSetFunc: setTrackScrolling,
       },
-      {refElem: artistRef.current,
+      {name: "artist",
+        refElem: artistRef.current,
         scrollSetFunc: setArtistScrolling,
       }
-    ].forEach(({refElem, scrollSetFunc}) => {
+    ].forEach(({name, refElem, scrollSetFunc}) => {
       if (refElem) {
         const containerWidth = refElem.offsetWidth;
         const textWidth = refElem.scrollWidth;
@@ -38,12 +40,12 @@ const CurrentTrack = () => {
           const offset = textWidth - containerWidth;
           const duration = offset / 60;
 
-          refElem.style.setProperty("--offset", `${-offset}px`);
-          refElem.style.setProperty("--duration", `${duration}s`);
+          refElem.style.setProperty(`--offset_${name}`, `${-offset}px`);
+          refElem.style.setProperty(`--duration_${name}`, `${duration}s`);
         } else {
           scrollSetFunc(false);
-          refElem.style.removeProperty("--offset");
-          refElem.style.removeProperty("--duration");
+          refElem.style.removeProperty(`--offset_${name}`);
+          refElem.style.removeProperty(`--duration_${name}`);
         }
       }
     })
