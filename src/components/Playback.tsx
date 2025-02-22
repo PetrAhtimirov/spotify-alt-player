@@ -6,6 +6,7 @@ import PlaybackControllers from "./PlaybackControllers.tsx";
 import CurrentTrack from "./CurrentTrack.tsx";
 import {fetchPlaybackDevice} from "../slices/playbackDevice.ts";
 import VolumeController from "./VolumeController.tsx";
+import PlaybackRange from "./PlaybackRange.tsx";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -33,6 +34,7 @@ const Playback = () => {
             <CurrentTrack/>
             <div className="playback_controllers__wrapper">
               <PlaybackControllers/>
+              <PlaybackRange/>
             </div>
             <div className="playback_settings">
               <PlaybackDevice/>

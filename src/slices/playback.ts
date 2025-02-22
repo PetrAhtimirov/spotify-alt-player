@@ -40,7 +40,9 @@ export interface PlaybackState {
       uri: string
     }[],
     is_saved: null | boolean,
+    duration_ms: number;
   }
+  progress_ms: number
   is_playing: boolean;
 }
 
@@ -70,7 +72,9 @@ const initialState: PlaybackState = {
     },
     artists: [],
     is_saved: null,
+    duration_ms: 0,
   },
+  progress_ms: 0,
   is_playing: false,
 };
 
@@ -260,7 +264,7 @@ const playback = createSlice({
           state.device = action.payload.device;
           state.item = {...action.payload.item, is_saved: state.item.is_saved};
           state.is_playing = action.payload.is_playing;
-          
+          state.progress_ms = action.payload.progress_ms;
         }
       })
       .addCase(fetchPlayback.rejected, (state) => {
